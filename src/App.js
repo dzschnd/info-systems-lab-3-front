@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import AdminRequests from "./pages/AdminRequests";
+import Workers from "./pages/Workers";
+import SpecialInterface from "./pages/SpecialInterface";
+import PageNotFound from "./pages/PageNotFound";
+import MainLayout from "./pages/MainLayout";
+import {useEffect} from "react";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    useEffect(() => {
+        console.log("App mounted");
+    }, []);
+
+    return (
+        <div>
+            <Router basename="/~s372828">
+            {/*<Router basename="">*/}
+                <Routes>
+                    <Route path="/" element={<MainLayout><Workers/></MainLayout>} />
+                    <Route path="/admin-requests" element={<MainLayout><AdminRequests/></MainLayout>} />
+                    <Route path="/special-interface" element={<MainLayout><SpecialInterface/></MainLayout>} />
+                    <Route path="/register" element={<Register/>} />
+                    <Route path="/login" element={<Login/>} />
+                    <Route path="*" element={<PageNotFound/>} />
+                </Routes>
+            </Router>
+        </div>
+    );
 }
 
 export default App;
