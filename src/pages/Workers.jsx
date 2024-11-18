@@ -110,34 +110,38 @@ function Workers() {
         checkAuth().then();
     }, []);
 
-
     useEffect(() => {
+        const fetchWorkers = async () => {
+            const fetchedWorkers = await getAllWorkersRequest();
+            setWorkers(fetchedWorkers.data);
+        }
+
         const intervalId = setInterval(() => {
-            fetchData().then(() => setLoading(false));
+            fetchWorkers().then(() => setLoading(false));
         }, 10000);
 
         return () => clearInterval(intervalId);
     }, []);
 
     useEffect(() => {
-        if (error) setIsErrorModalOpen(true);
-    }, [error]);
-
-    const fetchData = async () => {
-        try {
-            const fetchedWorkers = await getAllWorkersRequest();
+        const fetchModalData = async () => {
             const fetchedCoordinates = await getAllCoordinatesRequest();
             const fetchedOrganizations = await getAllOrganizationsRequest();
             const fetchedPersons = await getAllPersonsRequest();
-
-            setWorkers(fetchedWorkers.data);
             setCoordinates(fetchedCoordinates.data);
             setOrganizations(fetchedOrganizations.data);
             setPersons(fetchedPersons.data)
-        } catch (err) {
-            setError(err.response?.data || err.message || "An error occurred");
         }
-    };
+        if (isCreateModalOpen || isUpdateModalOpen) {
+            setOperationLoading(true);
+            fetchModalData().then(() => setOperationLoading(false));
+        }
+    }, [isCreateModalOpen, isUpdateModalOpen]);
+
+
+    useEffect(() => {
+        if (error) setIsErrorModalOpen(true);
+    }, [error]);
 
     const createWorker = async (formData) => {
         try {

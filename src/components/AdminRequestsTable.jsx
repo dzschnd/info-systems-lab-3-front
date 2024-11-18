@@ -79,6 +79,7 @@ const AdminRequestsTable = ({ adminRequests, approveRequest, rejectRequest }) =>
         },
         onPaginationChange: setPagination,
         onSortingChange: setSorting,
+        autoResetPageIndex: false,
     });
 
     return (

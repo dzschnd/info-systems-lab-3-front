@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import ErrorModal from "../components/modals/ErrorModal";
 import Loader from "./Loader";
 import AdminRequestsTable from "../components/AdminRequestsTable";
@@ -34,38 +34,34 @@ function AdminRequests() {
             console.error('Error fetching current user:', err);
         }
     };
-    const fetchAdminRequests = useCallback(async () => {
-        try {
-            if (currentUser && isAdmin) {
-                const response = await getPendingAdminRequests();
-                setAdminRequests(response.data);
-            }
-        } catch (err) {
-            console.error('Error fetching admin requests:', err);
-        }
-    }, [currentUser, isAdmin]);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            await fetchUserData();
-            await fetchAdminRequests();
-        }
-        fetchData().then(() => setLoading(false));
-    }, [currentUser, isAdmin, adminRequests, fetchAdminRequests]);
 
     useEffect(() => {
+        fetchUserData().then(() => setLoading(false));
+    }, []);
+
+    useEffect(() => {
+        const fetchAdminRequests = async () => {
+            try {
+                if (currentUser && isAdmin) {
+                    const response = await getPendingAdminRequests();
+                    setAdminRequests(response.data);
+                }
+            } catch (err) {
+                console.error('Error fetching admin requests:', err);
+            }
+        };
+
         const intervalId = setInterval(() => {
             fetchAdminRequests().then();
-        }, 5000);
+        }, 10000);
 
         return () => clearInterval(intervalId);
-    }, [fetchAdminRequests]);
+    }, [currentUser, isAdmin]);
 
     useEffect(() => {
         if (error) setIsErrorModalOpen(true);
     }, [error]);
-    
-    
+
     const handleRequestAdmin = async () => {
         try {
             await createAdminRequest();

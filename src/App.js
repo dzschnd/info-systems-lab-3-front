@@ -16,7 +16,6 @@ function App() {
     return (
         <div>
             <Router basename="/~s372828">
-            {/*<Router basename="">*/}
                 <Routes>
                     <Route path="/" element={<MainLayout><Workers/></MainLayout>} />
                     <Route path="/admin-requests" element={<MainLayout><AdminRequests/></MainLayout>} />

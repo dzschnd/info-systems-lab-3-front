@@ -543,7 +543,7 @@ const CreateModal = ({ onClose, onCreate, loading, currentUser, coordinates, org
 
                     <div className="border-t-2 pt-2 mt-2 flex justify-end col-span-3">
                         <button type="submit" className={`text-white disabled:bg-gray-500 bg-blue-500 p-2 mr-2 rounded`} disabled={loading}>
-                            {loading ? "Adding..." : "Add"}
+                            Add
                         </button>
                         <button type="button" onClick={onClose} className="bg-gray-500 text-white p-2 rounded">
                             Cancel

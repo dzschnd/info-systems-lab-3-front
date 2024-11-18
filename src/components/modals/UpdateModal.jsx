@@ -262,11 +262,6 @@ const UpdateModal = ({ onClose, onUpdate, record, loading, currentUser, coordina
                                         value: 1,
                                         message: "Organization Full Name cannot be empty.",
                                     },
-                                    validate: isOrgNull ? undefined : (value) => {
-                                        console.log(organizations);
-                                        const isUnique = !organizations.some(org => org.fullName === value) || selectedOrg !== '' || isOrgNull;
-                                        return isUnique || "Organization Full Name already exists.";
-                                    },
                                     onBlur: (e) => setValue('organization.fullName', e.target.value.trim())
                                 })}
                                 className="border p-2 mb-2 w-full"
@@ -502,7 +497,7 @@ const UpdateModal = ({ onClose, onUpdate, record, loading, currentUser, coordina
 
                     <div className="border-t-2 pt-2 mt-2 flex justify-end col-span-3">
                         <button type="submit" className={`text-white disabled:bg-gray-500 bg-blue-500 p-2 mr-2 rounded`} disabled={loading}>
-                            {loading ? "Updating..." : "Update"}
+                            Update
                         </button>
                         <button type="button" onClick={onClose} className="bg-gray-500 text-white p-2 rounded">
                             Cancel

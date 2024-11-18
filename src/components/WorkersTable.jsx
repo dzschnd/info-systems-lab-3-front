@@ -319,6 +319,7 @@ const WorkersTable = ({workers, currentUser, setRecord, setIsCreateModalOpen, se
         },
         onPaginationChange: setPagination,
         onSortingChange: setSorting,
+        autoResetPageIndex: false,
     });
 
     return (
@@ -687,8 +688,8 @@ const WorkersTable = ({workers, currentUser, setRecord, setIsCreateModalOpen, se
                         <strong>
                         {table.getState().pagination.pageIndex + 1} of{' '}
                             {table.getPageCount()}
-                    </strong>
-                </span>
+                        </strong>
+                    </span>
 
                     <div>
                         <button
