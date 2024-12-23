@@ -38,14 +38,24 @@ function Header() {
                                       className="text-white hover:text-blue-300 transition duration-200">Workers</Link>
                             </li>
                             <li>
-                                <Link to="/admin-requests"
-                                      className="text-white hover:text-blue-300 transition duration-200">Admin
-                                    Requests</Link>
+                                <Link to="/file-import"
+                                      className="text-white hover:text-blue-300 transition duration-200">File
+                                    Import</Link>
+                            </li>
+                            <li>
+                                <Link to="/file-import-history"
+                                      className="text-white hover:text-blue-300 transition duration-200">File
+                                    Import History</Link>
                             </li>
                             <li>
                                 <Link to="/special-interface"
                                       className="text-white hover:text-blue-300 transition duration-200">Special
                                     Interface</Link>
+                            </li>
+                            <li>
+                                <Link to="/admin-requests"
+                                      className="text-white hover:text-blue-300 transition duration-200">Admin
+                                    Requests</Link>
                             </li>
                         </ul>
                     </nav>

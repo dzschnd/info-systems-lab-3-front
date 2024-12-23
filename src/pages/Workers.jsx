@@ -147,6 +147,7 @@ function Workers() {
         try {
             setOperationLoading(true);
             const response = await createWorkerRequest(formData);
+            console.log(response.data);
             setWorkers((prev) => [...prev, response.data]);
             resetRecord();
         } catch (err) {
@@ -160,7 +161,8 @@ function Workers() {
     const updateWorker = async (formData) => {
         try {
             setOperationLoading(true);
-            const response = await updateWorkerRequest(formData)
+            const response = await updateWorkerRequest(formData);
+            console.log(response.data);
             setWorkers((prev) => prev.map((worker) => (worker.id === formData.id ? response.data : worker)));
         } catch (err) {
             setError(err.response?.data || err.message || "An error occurred");

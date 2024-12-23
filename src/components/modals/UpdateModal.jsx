@@ -70,16 +70,16 @@ const UpdateModal = ({ onClose, onUpdate, record, loading, currentUser, coordina
             setValue('organization.officialAddress.town.z', org.officialAddress.town.z);
             setValue('organization.officialAddress.town.name', org.officialAddress.town.name);
         } else {
-            setValue('organization.fullName', record.organization.fullName);
-            setValue('organization.type', record.organization.type);
-            setValue('organization.annualTurnover', record.organization.annualTurnover);
-            setValue('organization.employeesCount', record.organization.employeesCount);
-            setValue('organization.officialAddress.street', record.organization.officialAddress.street);
-            setValue('organization.officialAddress.zipCode', record.organization.officialAddress.zipCode);
-            setValue('organization.officialAddress.town.x', record.organization.officialAddress.town.x);
-            setValue('organization.officialAddress.town.y', record.organization.officialAddress.town.y);
-            setValue('organization.officialAddress.town.z', record.organization.officialAddress.town.z);
-            setValue('organization.officialAddress.town.name', record.organization.officialAddress.town.name);
+            setValue('organization.fullName', record.organization?.fullName || undefined);
+            setValue('organization.type', record.organization?.type || undefined);
+            setValue('organization.annualTurnover', record.organization?.annualTurnover || undefined);
+            setValue('organization.employeesCount', record.organization?.employeesCount || undefined);
+            setValue('organization.officialAddress.street', record.organization?.officialAddress?.street || undefined);
+            setValue('organization.officialAddress.zipCode', record.organization?.officialAddress?.zipCode || undefined);
+            setValue('organization.officialAddress.town.x', record.organization?.officialAddress?.town?.x || undefined);
+            setValue('organization.officialAddress.town.y', record.organization?.officialAddress?.town?.y || undefined);
+            setValue('organization.officialAddress.town.z', record.organization?.officialAddress?.town?.z || undefined);
+            setValue('organization.officialAddress.town.name', record.organization?.officialAddress?.town?.name || undefined);
         }
     };
     const handlePersonsSelect = (person) => {
@@ -244,7 +244,7 @@ const UpdateModal = ({ onClose, onUpdate, record, loading, currentUser, coordina
                                 disabled={isOrgNull}
                             >
                                 <option value="" disabled>Select Organization ID</option>
-                                <option value="">Empty</option>
+                                <option value="" disabled={loading}>{loading ? `Loading...` : `Empty`}</option>
                                 {currentUser.role === 'ADMIN' ?
                                     organizations.map(org => (
                                         <option key={org.id} value={org.id}>{org.id}</option>
@@ -386,7 +386,7 @@ const UpdateModal = ({ onClose, onUpdate, record, loading, currentUser, coordina
                                 className="border p-2 mb-2 w-full disabled:bg-disabled-grey-400 disabled:border-disabled-grey-900"
                             >
                                 <option value="" disabled>Select Person ID</option>
-                                <option value="">Current</option>
+                                <option value="" disabled={loading}>{loading ? `Loading...` : `Current`}</option>
                                 {currentUser.role === 'ADMIN' ?
                                     persons.map(person => (
                                         <option key={person.id} value={person.id}>{person.id}</option>
@@ -496,7 +496,7 @@ const UpdateModal = ({ onClose, onUpdate, record, loading, currentUser, coordina
                     </div>
 
                     <div className="border-t-2 pt-2 mt-2 flex justify-end col-span-3">
-                        <button type="submit" className={`text-white disabled:bg-gray-500 bg-blue-500 p-2 mr-2 rounded`} disabled={loading}>
+                        <button type="submit" className={`text-white disabled:bg-gray-500 bg-blue-500 p-2 mr-2 rounded`}>
                             Update
                         </button>
                         <button type="button" onClick={onClose} className="bg-gray-500 text-white p-2 rounded">

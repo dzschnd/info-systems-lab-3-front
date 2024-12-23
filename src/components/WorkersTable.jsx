@@ -234,37 +234,38 @@ const WorkersTable = ({workers, currentUser, setRecord, setIsCreateModalOpen, se
     const filteredData = useMemo(() => {
         return workers.filter((worker) => {
             return (
-                (filterAuthorId === '' || worker.author.id.toString().includes(filterAuthorId)) &&
-                (filterAuthorName === '' || worker.author.username.toString().includes(filterAuthorName)) &&
-                (filterId === '' || worker.id.toString().includes(filterId)) &&
-                (filterName === '' || worker.name.toLowerCase().includes(filterName.toLowerCase())) &&
-                (filterXCoordinate === '' || worker.coordinates.x.toString().includes(filterXCoordinate)) &&
-                (filterYCoordinate === '' || worker.coordinates.y.toString().includes(filterYCoordinate)) &&
-                (filterCreationDate === '' || formatDateArrayToInputValue(worker.creationDate).includes(filterCreationDate)) &&
-                (filterSalary === '' || worker.salary.toString().includes(filterSalary)) &&
-                (filterRating === '' || worker.rating.toString().includes(filterRating)) &&
-                (filterStartDate === '' || formatUnixTimestampToInputValue(worker.startDate).includes(filterStartDate)) &&
-                (filterEndDate === '' || formatDateArrayToInputValue(worker.endDate).includes(filterEndDate)) &&
-                (filterStatus === '' || worker.status.toLowerCase().includes(filterStatus.toLowerCase())) &&
-                (filterAnnualTurnover === '' || worker.organization.annualTurnover.toString().includes(filterAnnualTurnover)) &&
-                (filterEmployeesCount === '' || worker.organization.employeesCount.toString().includes(filterEmployeesCount)) &&
-                (filterFullName === '' || worker.organization.fullName.toLowerCase().includes(filterFullName.toLowerCase())) &&
-                (filterOrgType === '' || worker.organization.type.toLowerCase().includes(filterOrgType.toLowerCase())) &&
-                (filterStreet === '' || worker.organization.officialAddress.street.toLowerCase().includes(filterStreet.toLowerCase())) &&
-                (filterZip === '' || worker.organization.officialAddress.zipCode.toString().includes(filterZip)) &&
-                (filterTownX === '' || worker.organization.officialAddress.town.x.toString().includes(filterTownX)) &&
-                (filterTownY === '' || worker.organization.officialAddress.town.y.toString().includes(filterTownY)) &&
-                (filterTownZ === '' || worker.organization.officialAddress.town.z.toString().includes(filterTownZ)) &&
-                (filterTownName === '' || worker.organization.officialAddress.town.name.toLowerCase().includes(filterTownName.toLowerCase())) &&
-                (filterEyeColor === '' || worker.person.eyeColor.toLowerCase().includes(filterEyeColor.toLowerCase())) &&
-                (filterHairColor === '' || worker.person.hairColor.toLowerCase().includes(filterHairColor.toLowerCase())) &&
-                (filterLocationX === '' || worker.person.location.x.toString().includes(filterLocationX)) &&
-                (filterLocationY === '' || worker.person.location.y.toString().includes(filterLocationY)) &&
-                (filterLocationZ === '' || worker.person.location.z.toString().includes(filterLocationZ)) &&
-                (filterLocationName === '' || worker.person.location.name.toLowerCase().includes(filterLocationName.toLowerCase())) &&
-                (filterBirthday === '' || formatMillisecondsTimestampToInputValue(worker.person.birthday).includes(filterBirthday)) &&
-                (filterHeight === '' || worker.person.height.toString().includes(filterHeight)) &&
-                (filterPassportID === '' || worker.person.passportID.toLowerCase().includes(filterPassportID.toLowerCase()))
+                (filterAuthorId === '' || worker.author?.id?.toString().includes(filterAuthorId)) &&
+                (filterAuthorName === '' || worker.author?.username?.toString().includes(filterAuthorName)) &&
+                (filterId === '' || worker.id?.toString().includes(filterId)) &&
+                (filterName === '' || worker.name?.toLowerCase().includes(filterName.toLowerCase())) &&
+                (filterXCoordinate === '' || worker.coordinates?.x?.toString().includes(filterXCoordinate)) &&
+                (filterYCoordinate === '' || worker.coordinates?.y?.toString().includes(filterYCoordinate)) &&
+                (filterCreationDate === '' || formatDateArrayToInputValue(worker.creationDate)?.includes(filterCreationDate)) &&
+                (filterSalary === '' || worker.salary?.toString().includes(filterSalary)) &&
+                (filterRating === '' || worker.rating?.toString().includes(filterRating)) &&
+                (filterStartDate === '' || formatUnixTimestampToInputValue(worker.startDate)?.includes(filterStartDate)) &&
+                (filterEndDate === '' || formatDateArrayToInputValue(worker.endDate)?.includes(filterEndDate)) &&
+                (filterStatus === '' || worker.status?.toLowerCase().includes(filterStatus.toLowerCase())) &&
+                (filterAnnualTurnover === '' || worker.organization?.annualTurnover?.toString().includes(filterAnnualTurnover)) &&
+                (filterEmployeesCount === '' || worker.organization?.employeesCount?.toString().includes(filterEmployeesCount)) &&
+                (filterFullName === '' || worker.organization?.fullName?.toLowerCase().includes(filterFullName.toLowerCase())) &&
+                (filterOrgType === '' || worker.organization?.type?.toLowerCase().includes(filterOrgType.toLowerCase())) &&
+                (filterStreet === '' || worker.organization?.officialAddress?.street?.toLowerCase().includes(filterStreet.toLowerCase())) &&
+                (filterZip === '' || worker.organization?.officialAddress?.zipCode?.toString().includes(filterZip)) &&
+                (filterTownX === '' || worker.organization?.officialAddress?.town?.x?.toString().includes(filterTownX)) &&
+                (filterTownY === '' || worker.organization?.officialAddress?.town?.y?.toString().includes(filterTownY)) &&
+                (filterTownZ === '' || worker.organization?.officialAddress?.town?.z?.toString().includes(filterTownZ)) &&
+                (filterTownName === '' || worker.organization?.officialAddress?.town?.name?.toLowerCase().includes(filterTownName.toLowerCase())) &&
+                (filterEyeColor === '' || worker.person?.eyeColor?.toLowerCase().includes(filterEyeColor.toLowerCase())) &&
+                (filterHairColor === '' || worker.person?.hairColor?.toLowerCase().includes(filterHairColor.toLowerCase())) &&
+                (filterLocationX === '' || worker.person?.location?.x?.toString().includes(filterLocationX)) &&
+                (filterLocationY === '' || worker.person?.location?.y?.toString().includes(filterLocationY)) &&
+                (filterLocationZ === '' || worker.person?.location?.z?.toString().includes(filterLocationZ)) &&
+                (filterLocationName === '' || worker.person?.location?.name?.toLowerCase().includes(filterLocationName.toLowerCase())) &&
+                (filterBirthday === '' || formatMillisecondsTimestampToInputValue(worker.person?.birthday)?.includes(filterBirthday)) &&
+                (filterHeight === '' || worker.person?.height?.toString().includes(filterHeight)) &&
+                (filterPassportID === '' || worker.person?.passportID?.toLowerCase().includes(filterPassportID.toLowerCase()))
+
             );
         });
     }, [

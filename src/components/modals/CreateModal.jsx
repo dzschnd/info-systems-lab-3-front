@@ -279,7 +279,7 @@ const CreateModal = ({ onClose, onCreate, loading, currentUser, coordinates, org
                                 disabled={isOrgNull}
                             >
                                 <option value="" disabled>Select Organization ID</option>
-                                <option value="">Empty</option>
+                                <option value="" disabled={loading}>{loading? `Loading...` : `Empty`}</option>
                                 {currentUser.role === 'ADMIN' ?
                                     organizations.map(org => (
                                         <option key={org.id} value={org.id}>{org.id}</option>
@@ -296,11 +296,6 @@ const CreateModal = ({ onClose, onCreate, loading, currentUser, coordinates, org
                                     minLength: isOrgNull ? undefined : {
                                         value: 1,
                                         message: "Organization Full Name cannot be empty.",
-                                    },
-                                    validate: isOrgNull ? undefined : (value) => {
-                                        console.log(organizations);
-                                        const isUnique = !organizations.some(org => org.fullName === value) || selectedOrg !== '' || isOrgNull;
-                                        return isUnique || "Organization Full Name already exists.";
                                     },
                                     onBlur: (e) => setValue('organization.fullName', e.target.value.trim())
                                 })}
@@ -425,7 +420,7 @@ const CreateModal = ({ onClose, onCreate, loading, currentUser, coordinates, org
                                 className="border p-2 mb-2 w-full disabled:bg-disabled-grey-400 disabled:border-disabled-grey-900"
                             >
                                 <option value="" disabled>Select Person ID</option>
-                                <option value="">Empty</option>
+                                <option value="" disabled={loading}>{loading? `Loading...` : `Empty`}</option>
                                 {currentUser.role === 'ADMIN' ?
                                     persons.map(person => (
                                         <option key={person.id} value={person.id}>{person.id}</option>
@@ -526,10 +521,6 @@ const CreateModal = ({ onClose, onCreate, loading, currentUser, coordinates, org
                                         value: 25,
                                         message: "Passport ID cannot be exceed 25 characters."
                                     },
-                                    validate: (value) => {
-                                        const isUnique = !persons.some(p => p.passportID === value) || selectedPerson !== '';
-                                        return isUnique || "Passport ID already exists.";
-                                    },
                                     onBlur: (e) => setValue('person.passportID', e.target.value.trim())
                                 })}
                                 className="border p-2 mb-2 w-full"
@@ -542,7 +533,7 @@ const CreateModal = ({ onClose, onCreate, loading, currentUser, coordinates, org
                     </div>
 
                     <div className="border-t-2 pt-2 mt-2 flex justify-end col-span-3">
-                        <button type="submit" className={`text-white disabled:bg-gray-500 bg-blue-500 p-2 mr-2 rounded`} disabled={loading}>
+                        <button type="submit" className={`text-white disabled:bg-gray-500 bg-blue-500 p-2 mr-2 rounded`}>
                             Add
                         </button>
                         <button type="button" onClick={onClose} className="bg-gray-500 text-white p-2 rounded">
