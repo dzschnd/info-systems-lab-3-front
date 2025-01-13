@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import ErrorModal from "../components/modals/ErrorModal";
 import Loader from "./Loader";
 import FileImportHistoryTable from "../components/FileImportHistoryTable";
-import AdminRequestsPanel from "../components/AdminRequestsPanel";
 import { getCurrentUserRequest } from "../components/api/UserService";
-import { getFileImportActions } from "../components/api/ActionService";
+import { getFileImports } from "../components/api/FileImportService";
 import ForbiddenSectionPanel from "../components/ForbiddenSectionPanel";
 
 function FileImportHistory() {
@@ -34,7 +33,7 @@ function FileImportHistory() {
         const fetchFileImportActions = async () => {
             try {
                 if (currentUser) {
-                    const response = await getFileImportActions();
+                    const response = await getFileImports();
                     setFileImportHistory(response.data);
                 }
             } catch (err) {
@@ -67,6 +66,8 @@ function FileImportHistory() {
     return (
         <div className="p-4">
             <h1 className="text-2xl font-bold mb-4">File Import History</h1>
+
+            {/* Error Modal */}
             {isErrorModalOpen && error && (
                 <ErrorModal
                     onClose={() => {
@@ -76,9 +77,17 @@ function FileImportHistory() {
                     message={error}
                 />
             )}
+
+            {/* Display file import history */}
             {currentUser ? (
-                <FileImportHistoryTable fileImportHistory={fileImportHistory} />
+                // Show file import history or a message if empty
+                fileImportHistory.length > 0 ? (
+                    <FileImportHistoryTable fileImportHistory={fileImportHistory} />
+                ) : (
+                    <p>No file import history available.</p>
+                )
             ) : (
+                // If there's no current user, show forbidden access or login message
                 <ForbiddenSectionPanel />
             )}
         </div>

@@ -7,6 +7,7 @@ export const importWorkersRequest = async (formData) => {
     const token = localStorage.getItem("token");
 
     if (token) {
+        console.log(token);
         return await axios.post(`${API_URL}/from-file-import`, formData, {
             headers: {
                 Authorization: `${token}`,

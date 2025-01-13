@@ -6,20 +6,34 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
+import {downloadFile} from "./api/FileImportService";
 
 const FileImportHistoryTable = ({ fileImportHistory }) => {
     const columns = useMemo(() => [
         {
+            accessorKey: 'download',
+            header: '',
+            cell: ({ row }) => (
+                <button
+                    onClick={() => downloadFile(row.original.id, row.original.fileName)}
+                    className="bg-fuchsia-500 text-white py-1 px-2 rounded hover:bg-fuchsia-700 transition duration-300"
+                >
+                    Download
+                </button>
+            ),
+            enableSorting: false,
+        },
+        {
+            accessorKey: 'id',
+            header: 'File Import ID',
+        },
+        {
+            accessorKey: 'fileName',
+            header: 'File Name',
+        },
+        {
             accessorKey: 'user.username',
             header: 'Username',
-        },
-        {
-            accessorKey: 'user.id',
-            header: 'User ID',
-        },
-        {
-            accessorKey: 'worker.id',
-            header: 'Worker ID',
         },
         {
             accessorKey: 'createdAt',
@@ -30,29 +44,23 @@ const FileImportHistoryTable = ({ fileImportHistory }) => {
                 return readableDate;
             }
         },
-        {
-            accessorKey: 'actionType',
-            header: 'Action Type',
-        },
     ], []);
 
+    const [filterFileImportId, setFilterFileImportId] = useState('');
+    const [filterFileName, setFilterFileName] = useState('');
     const [filterUsername, setFilterUsername] = useState('');
-    const [filterUserId, setFilterUserId] = useState('');
-    const [filterWorkerId, setFilterWorkerId] = useState('');
     const [filterCreatedAt, setFilterCreatedAt] = useState('');
-    const [filterActionType, setFilterActionType] = useState('');
 
     const filteredData = useMemo(() => {
         return fileImportHistory.filter((item) => {
             return (
+                (filterFileImportId === '' || item.id.toString().includes(filterFileImportId)) &&
+                (filterFileName === '' || item.fileName.toLowerCase().includes(filterFileName.toLowerCase())) &&
                 (filterUsername === '' || item.user.username.toLowerCase().includes(filterUsername.toLowerCase())) &&
-                (filterUserId === '' || item.user.id.toString().includes(filterUserId)) &&
-                (filterWorkerId === '' || item.worker.id.toString().includes(filterWorkerId)) &&
-                (filterCreatedAt === '' || item.createdAt.includes(filterCreatedAt)) &&
-                (filterActionType === '' || item.actionType.toLowerCase().includes(filterActionType.toLowerCase()))
+                (filterCreatedAt === '' || item.createdAt.includes(filterCreatedAt))
             );
         });
-    }, [fileImportHistory, filterUsername, filterUserId, filterWorkerId, filterCreatedAt, filterActionType]);
+    }, [fileImportHistory, filterFileName, filterFileImportId, filterUsername, filterCreatedAt]);
 
     const [pagination, setPagination] = useState({ pageIndex: 0, pageSize: 5 });
 
@@ -91,6 +99,22 @@ const FileImportHistoryTable = ({ fileImportHistory }) => {
                                 >
                                     <div className="flex justify-between">
                                         <div>
+                                            {header.column.columnDef.header === 'File Import ID' && (
+                                                <input
+                                                    className="border border-gray-300 px-2 py-1 my-1 rounded"
+                                                    type="text"
+                                                    value={filterFileImportId}
+                                                    onChange={(e) => setFilterFileImportId(e.target.value)}
+                                                />
+                                            )}
+                                            {header.column.columnDef.header === 'File Name' && (
+                                                <input
+                                                    className="border border-gray-300 px-2 py-1 my-1 rounded"
+                                                    type="text"
+                                                    value={filterFileName}
+                                                    onChange={(e) => setFilterFileName(e.target.value)}
+                                                />
+                                            )}
                                             {header.column.columnDef.header === 'Username' && (
                                                 <input
                                                     className="border border-gray-300 px-2 py-1 my-1 rounded"
@@ -99,36 +123,12 @@ const FileImportHistoryTable = ({ fileImportHistory }) => {
                                                     onChange={(e) => setFilterUsername(e.target.value)}
                                                 />
                                             )}
-                                            {header.column.columnDef.header === 'User ID' && (
-                                                <input
-                                                    className="border border-gray-300 px-2 py-1 my-1 rounded"
-                                                    type="text"
-                                                    value={filterUserId}
-                                                    onChange={(e) => setFilterUserId(e.target.value)}
-                                                />
-                                            )}
-                                            {header.column.columnDef.header === 'Worker ID' && (
-                                                <input
-                                                    className="border border-gray-300 px-2 py-1 my-1 rounded"
-                                                    type="text"
-                                                    value={filterWorkerId}
-                                                    onChange={(e) => setFilterWorkerId(e.target.value)}
-                                                />
-                                            )}
                                             {header.column.columnDef.header === 'Created At' && (
                                                 <input
                                                     className="border border-gray-300 px-2 py-1 my-1 rounded"
                                                     type="text"
                                                     value={filterCreatedAt}
                                                     onChange={(e) => setFilterCreatedAt(e.target.value)}
-                                                />
-                                            )}
-                                            {header.column.columnDef.header === 'Action Type' && (
-                                                <input
-                                                    className="border border-gray-300 px-2 py-1 my-1 rounded"
-                                                    type="text"
-                                                    value={filterActionType}
-                                                    onChange={(e) => setFilterActionType(e.target.value)}
                                                 />
                                             )}
                                         </div>

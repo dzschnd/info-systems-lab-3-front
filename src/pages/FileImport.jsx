@@ -73,6 +73,7 @@ function FileImport() {
         }
 
         const formData = new FormData();
+        formData.append("fileName", file.name);
         formData.append("file", file);
 
         try {
